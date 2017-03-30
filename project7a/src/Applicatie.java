@@ -5,7 +5,7 @@
  */
 
 
-import java.io.File;
+import java.io.*;
 import javax.swing.JFileChooser;
 
 /**
@@ -13,13 +13,11 @@ import javax.swing.JFileChooser;
  * @author Koen
  */
 public class Applicatie {
-
-    /**
-     * @param args the command line arguments
-     */
-    
+    public static BufferedReader inFile;
     public JFileChooser fileChooser = new JFileChooser();
     public File selectedFile;
+    public String sequence;
+    
     
     public static void main(String[] args) {
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -29,12 +27,18 @@ public class Applicatie {
         });
     }
     
-    private void openBestand(){
-        // openen van een geselecteerd bestand
+
+    public void leesBestand(String locatie)throws FileNotFoundException, IOException {
+                String lines;
+        try {
+            inFile = new BufferedReader(new FileReader(locatie));
+            inFile.readLine();
+            while ((lines = inFile.readLine()) != null) {
+                sequence += lines;
     }
-    
-    private void leesBestand(File bestand){
-        // lezen van ingeladen bestand
+            } catch (FileNotFoundException e) {
+            System.out.println("er is iets fout gegaan bij het inladen van het bestand");
+        }
     }
     
     private void voorspel(DNA sequentie){
