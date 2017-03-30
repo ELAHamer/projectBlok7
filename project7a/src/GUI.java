@@ -14,8 +14,7 @@ public class GUI extends javax.swing.JFrame {
     JFileChooser fileChooser = new JFileChooser();
     File selectedFile;
     private static BufferedReader inFile;
-    private boolean manualInput;
-    private static String sequence;
+    Applicatie app = new Applicatie();
     /**
      * Creates new form NewJFrame
      */
@@ -61,11 +60,6 @@ public class GUI extends javax.swing.JFrame {
         jLabel1.setText("Bestand:");
 
         bestandTextField.setText("Bestand hier");
-        bestandTextField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bestandTextFieldActionPerformed(evt);
-            }
-        });
 
         bladerButton.setText("Blader");
         bladerButton.addActionListener(new java.awt.event.ActionListener() {
@@ -179,17 +173,12 @@ public class GUI extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void bestandTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bestandTextFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_bestandTextFieldActionPerformed
-
     private void bladerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bladerButtonActionPerformed
         int reply = fileChooser.showOpenDialog(this);
         if (reply == JFileChooser.APPROVE_OPTION) {
             selectedFile = fileChooser.getSelectedFile();
-            bestandTextField.setText(selectedFile.getAbsolutePath());
-            manualInput = false;
         }
+        bestandTextField.setText(selectedFile.getAbsolutePath());
     }//GEN-LAST:event_bladerButtonActionPerformed
 
     private void voorspelORFButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_voorspelORFButtonActionPerformed
@@ -198,20 +187,15 @@ public class GUI extends javax.swing.JFrame {
 
     private void openButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openButtonActionPerformed
         String fileLocation = bestandTextField.getText();
-        if (manualInput == true) {
             try {
-                readFile(fileLocation);
-                inFile.close();
+                app.leesBestand(fileLocation);
+
             } catch (IOException ex) {
                 Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }
+     
     }//GEN-LAST:event_openButtonActionPerformed
 
-    private void readFile(String location) throws FileNotFoundException, IOException {
-        //inlezen van bestand
-    }
-    
     private void visualiseerORF(ORF item, DNA sequentie){
         //visualiseren van ORFs
     }
