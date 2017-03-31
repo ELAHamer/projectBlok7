@@ -62,25 +62,55 @@ public class Applicatie {
      *  voorspelt de ORFs op de ingeladen DNA sequentie.
      *  De ORFs worden meegegeven aan de functie opslaan ORF
      */
-    public void voorspel() {
-        // Float emptyPcn = 0.0;
-        String testSequentie = "AGCTGACTGCATCGAGCTGCTATGGCCCTGAGTAACTGACGATGCCTAGGAATGACAGCTATGCCAGACGATGAATGATTGATTGCTAC";
-        ArrayList<DNA> readingFrames = new ArrayList<DNA>();
-        StringBuilder reverse = new StringBuilder();
-        for (int i = 0; i < 3; i++) {
-            readingFrames.add(new DNA(testSequentie.substring(i), 0.0f));
-        }
-        reverse.append(testSequentie);
-        reverse = reverse.reverse();
-        for (int i = 0; i < 3; i++) {
-            readingFrames.add(new DNA(reverse.substring(i), 0.0f));
-        }
+    public ArrayList<ORF> voorspel(String sequentie, String direction)  throws StringIndexOutOfBoundsException{
 
-        ArrayList<String[]> codonFrames = new ArrayList<>();
-        for (int i = 0; i < readingFrames.size(); i++) {
-            codonFrames.add(readingFrames.get(i).getSequentie().split("(?<=\\G.{3})"));
-        }
+        ArrayList<ORF> ORFs = new ArrayList<ORF>();
 
+        String tempORF = "";
+        Integer indexORF = 0;
+        Integer startIndex = 0;
+        Integer frame = 0;
+
+        
+       // System.out.println("input: "+sequentie+" index: "+startIndex);        
+            try{
+                for(int i = 0;i<3;i++){
+                    //System.out.println("loop "+i);
+                    for(int e=startIndex; e<sequentie.length()-2;e=e+3){
+                        //System.out.println("codon: "+sequentie.substring(e, e+3));
+                        if(sequentie.substring(e,e+3).equals("ATG") && tempORF.equals("")){
+                            tempORF += sequentie.substring(e, e+3);
+                            //System.out.println(sequentie.substring(e,e+3));
+                            indexORF +=3;
+                        }else if(tempORF.length()>4 && (sequentie.substring(e, e+3).equals("TAG") || sequentie.substring(e, e+3).equals("TAA")|| sequentie.substring(e, e+3).equals("TGA"))){
+                            tempORF +=sequentie.substring(e, e+3);
+                            //System.out.println(tempORF);
+                            ORFs.add(new ORF(tempORF,0.0f,indexORF,frame));
+                            tempORF = "";
+                            indexORF = 0;
+                        }else if(tempORF != ""){
+                            tempORF += sequentie.substring(e, e+3);
+                            indexORF += 3;
+                        }else if(e+3>sequentie.length()){
+                            ORFs.add(new ORF(tempORF,0.0f,indexORF,frame));
+                        }
+                    }   startIndex = startIndex+1;
+                        if(direction.equals("forward")){
+                            frame = frame +1;
+                        }else{
+                            frame = frame -1;
+                        }
+                }
+            }catch(StringIndexOutOfBoundsException err){
+                System.out.println("error: "+err.getMessage());
+                
+            }finally{for(int Y = 0;Y<ORFs.size();Y++){              
+                if(ORFs.get(Y).getFrame()<-1){
+                    ORFs.get(Y).setSequentie(reverseSequentie(ORFs.get(Y).getSequentie()));
+                }                
+            }
+                
+            }return ORFs;
         // ORFs voorspellen en opslaan in ORFsList
         opslaanDNA();
         opslaanORF();
