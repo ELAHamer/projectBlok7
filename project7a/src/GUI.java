@@ -192,11 +192,20 @@ public class GUI extends javax.swing.JFrame {
     /**
     * Roept de functie voorspel() aan om ORFs te voorspellen.
     */
-    private void voorspelORFButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_voorspelORFButtonActionPerformed
-    app.voorspel();
+    private void voorspelORFButtonActionPerformed(java.awt.event.ActionEvent evt) {                                                  
+        
+        app.voorspel(app.sequence,"forward");
+        app.voorspel(app.reverseSequentie(app.sequence),"reverse");
+        for(int i=0;i<app.voorspel(app.sequence, "forward").size();i++){
+            orfVisualisatie.append("\nORF "+(app.voorspel(app.sequence, "forward")).get(i).getSequentie());
+        }
+        for(int i=0;i<app.voorspel(app.reverseSequentie(app.sequence), "reverse").size();i++){
+            orfVisualisatie.append("\nORF "+(app.voorspel(app.reverseSequentie(app.sequence),"reverse")).get(i).getSequentie());
+        }
+        
 
 // TODO add your handling code here:
-    }//GEN-LAST:event_voorspelORFButtonActionPerformed
+    } //GEN-LAST:event_voorspelORFButtonActionPerformed
     /**
     * Opent het geselecteerde bestand en roept de methode leesBestand() aan om de inhoud te lezen.
     */
