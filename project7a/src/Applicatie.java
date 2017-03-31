@@ -43,13 +43,14 @@ public class Applicatie {
         }
     }
     
-    public void voorspel(String sequentie)  throws StringIndexOutOfBoundsException{
+    public void voorspel(String sequentie, String direction)  throws StringIndexOutOfBoundsException{
 
-        ArrayList<DNA> ORFs = new ArrayList<DNA>();
+        ArrayList<ORF> ORFs = new ArrayList<ORF>();
 
         String tempORF = "";
         Integer indexORF = 0;
         Integer startIndex = 0;
+        Integer frame = 0;
 
        // System.out.println("input: "+sequentie+" index: "+startIndex);        
             try{
@@ -64,21 +65,27 @@ public class Applicatie {
                         }else if(tempORF.length()>4 && (sequentie.substring(e, e+3).equals("TAG") || sequentie.substring(e, e+3).equals("TAA")|| sequentie.substring(e, e+3).equals("TGA"))){
                             tempORF +=sequentie.substring(e, e+3);
                             //System.out.println(tempORF);
-                            ORFs.add(new DNA(tempORF,0.0f));
+                            ORFs.add(new ORF(tempORF,0.0f,indexORF,frame));
                             tempORF = "";
+                            indexORF = 0;
                         }else if(tempORF != ""){
                             tempORF += sequentie.substring(e, e+3);
-                        
+                            indexORF += 3;
                         }else if(e+3>sequentie.length()){
-                            ORFs.add(new DNA(tempORF,0.0f));
+                            ORFs.add(new ORF(tempORF,0.0f,indexORF,frame));
                         }
-                    } startIndex = startIndex+1;
+                    }   startIndex = startIndex+1;
+                        if(direction.equals("forward")){
+                            frame = frame +1;
+                        }else{
+                            frame = frame -1;
+                        }
                 }
             }catch(StringIndexOutOfBoundsException err){
                 System.out.println("error: "+err.getMessage());
                 
             }finally{for(int Y = 0;Y<ORFs.size();Y++){
-                System.out.println("ORF's: "+ORFs.get(Y).getSequentie());
+                System.out.println("ORF's: "+ORFs.get(Y).getSequentie()+"frame: "+ORFs.get(Y).getFrame());
                 }
                 
             }

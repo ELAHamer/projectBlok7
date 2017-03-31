@@ -182,8 +182,8 @@ public class GUI extends javax.swing.JFrame {
     }//GEN-LAST:event_bladerButtonActionPerformed
 
     private void voorspelORFButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_voorspelORFButtonActionPerformed
-    app.voorspel(app.sequence);
-    app.voorspel(app.reverseSequentie(app.sequence));
+    app.voorspel(app.sequence,"forward");
+    app.voorspel(app.reverseSequentie(app.sequence),"reverse");
 
 // TODO add your handling code here:
     }//GEN-LAST:event_voorspelORFButtonActionPerformed
