@@ -120,6 +120,18 @@ public class Applicatie {
      * het uitvoeren van blast op de gevonden ORFs
      * 
      */
+    
+    public String reverseSequentie(String sequentie){
+        StringBuilder reverse = new StringBuilder();
+
+        reverse.append(sequentie);
+        reverse = reverse.reverse();
+        //System.out.println(reverse);
+        return reverse.toString();
+        
+        }
+    
+    
     private void BlastORF(ORF item) {
         // uitvoeren van BLAST
     }
