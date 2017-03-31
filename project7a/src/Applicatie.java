@@ -44,21 +44,26 @@ public class Applicatie {
     }
     
     public void voorspel(String sequentie)  throws StringIndexOutOfBoundsException{
+
         ArrayList<DNA> ORFs = new ArrayList<DNA>();
 
         String tempORF = "";
         Integer indexORF = 0;
         Integer startIndex = 0;
 
+       // System.out.println("input: "+sequentie+" index: "+startIndex);        
             try{
                 for(int i = 0;i<3;i++){
-                    System.out.println("loop "+i);
+                    //System.out.println("loop "+i);
                     for(int e=startIndex; e<sequentie.length()-2;e=e+3){
+                        //System.out.println("codon: "+sequentie.substring(e, e+3));
                         if(sequentie.substring(e,e+3).equals("ATG") && tempORF.equals("")){
                             tempORF += sequentie.substring(e, e+3);
+                            //System.out.println(sequentie.substring(e,e+3));
                             indexORF +=3;
                         }else if(tempORF.length()>4 && (sequentie.substring(e, e+3).equals("TAG") || sequentie.substring(e, e+3).equals("TAA")|| sequentie.substring(e, e+3).equals("TGA"))){
                             tempORF +=sequentie.substring(e, e+3);
+                            //System.out.println(tempORF);
                             ORFs.add(new DNA(tempORF,0.0f));
                             tempORF = "";
                         }else if(tempORF != ""){
@@ -72,7 +77,7 @@ public class Applicatie {
             }catch(StringIndexOutOfBoundsException err){
                 System.out.println("error: "+err.getMessage());
                 
-            }finally{for(int Y = 0;Y<ORFs.size()-1;Y++){
+            }finally{for(int Y = 0;Y<ORFs.size();Y++){
                 System.out.println("ORF's: "+ORFs.get(Y).getSequentie());
                 }
                 
@@ -88,7 +93,9 @@ public class Applicatie {
 
         reverse.append(sequentie);
         reverse = reverse.reverse();
+        //System.out.println(reverse);
         return reverse.toString();
+        
         }
 
     

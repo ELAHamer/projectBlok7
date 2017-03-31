@@ -183,6 +183,7 @@ public class GUI extends javax.swing.JFrame {
 
     private void voorspelORFButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_voorspelORFButtonActionPerformed
     app.voorspel(app.sequence);
+    app.voorspel(app.reverseSequentie(app.sequence));
 
 // TODO add your handling code here:
     }//GEN-LAST:event_voorspelORFButtonActionPerformed
@@ -218,14 +219,8 @@ public class GUI extends javax.swing.JFrame {
     private void zoekActionPerformed(){
         // zoeken over DNA sequentie
     }
-    
-    private void voorspelActionPerformed(){
-        System.out.println("Voorspel action performed");
-        app.voorspel(app.sequence);
 
-// voorspellen van ORFs
-    }
-    
+
     private void visualiseerOrfActionPerformed(){
         //visualiseren van ORFs
     }
