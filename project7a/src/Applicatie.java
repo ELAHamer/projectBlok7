@@ -43,7 +43,7 @@ public class Applicatie {
         }
     }
     
-    public void voorspel(String sequentie, String direction)  throws StringIndexOutOfBoundsException{
+    public ArrayList<ORF> voorspel(String sequentie, String direction)  throws StringIndexOutOfBoundsException{
 
         ArrayList<ORF> ORFs = new ArrayList<ORF>();
 
@@ -52,6 +52,7 @@ public class Applicatie {
         Integer startIndex = 0;
         Integer frame = 0;
 
+        
        // System.out.println("input: "+sequentie+" index: "+startIndex);        
             try{
                 for(int i = 0;i<3;i++){
@@ -84,11 +85,13 @@ public class Applicatie {
             }catch(StringIndexOutOfBoundsException err){
                 System.out.println("error: "+err.getMessage());
                 
-            }finally{for(int Y = 0;Y<ORFs.size();Y++){
-                System.out.println("ORF's: "+ORFs.get(Y).getSequentie()+"frame: "+ORFs.get(Y).getFrame());
-                }
-                
+            }finally{for(int Y = 0;Y<ORFs.size();Y++){              
+                if(ORFs.get(Y).getFrame()<-1){
+                    ORFs.get(Y).setSequentie(reverseSequentie(ORFs.get(Y).getSequentie()));
+                }                
             }
+                
+            }return ORFs;
     }
             
 
