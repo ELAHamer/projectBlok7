@@ -7,6 +7,8 @@
 
 import java.io.*;
 import javax.swing.JFileChooser;
+import java.util.ArrayList;
+import java.util.*;
 
 /**
  *
@@ -41,8 +43,24 @@ public class Applicatie {
         }
     }
     
-    private void voorspel(DNA sequentie){
-        // uitvoeren van voorspelling over DNA
+    public void voorspel(){
+       // Float emptyPcn = 0.0;
+       String testSequentie = "AGCTGACTGCATCGAGCTGCTATGGCCCTGAGTAACTGACGATGCCTAGGAATGACAGCTATGCCAGACGATGAATGATTGATTGCTAC";
+        ArrayList<DNA> ORFs = new ArrayList<DNA>();
+        StringBuilder reverse = new StringBuilder();
+        for(int i = 0; i<3;i++){
+            ORFs.add(new DNA(testSequentie.substring(i+1),0.0f));
+        }
+        reverse.append(testSequentie);
+        reverse = reverse.reverse();
+        for(int i=0; i<3; i++){
+            ORFs.add(new DNA(reverse.substring(i+1),0.0f));
+        }
+        System.out.println(ORFs);
+        
+
+
+// uitvoeren van voorspelling over DNA
     }
     
     private void BlastORF(ORF item){
