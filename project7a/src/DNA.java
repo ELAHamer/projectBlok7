@@ -3,8 +3,8 @@
  * @author Rob
  */
 public class DNA {
-    private String sequentie;
-    private Float PercentageN;
+    protected String sequentie;
+    protected Float PercentageN;
         
     DNA(String seq,Float pcN) {
         this.PercentageN = bepaalPercentageN(seq);

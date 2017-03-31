@@ -182,7 +182,9 @@ public class GUI extends javax.swing.JFrame {
     }//GEN-LAST:event_bladerButtonActionPerformed
 
     private void voorspelORFButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_voorspelORFButtonActionPerformed
-        // TODO add your handling code here:
+    app.voorspel();
+
+// TODO add your handling code here:
     }//GEN-LAST:event_voorspelORFButtonActionPerformed
 
     private void openButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openButtonActionPerformed
@@ -197,7 +199,9 @@ public class GUI extends javax.swing.JFrame {
     }//GEN-LAST:event_openButtonActionPerformed
 
     private void visualiseerORF(ORF item, DNA sequentie){
-        //visualiseren van ORFs
+        
+
+    //visualiseren van ORFs
     }
     
     private void visualiseerBlast(BLAST item){
@@ -216,7 +220,10 @@ public class GUI extends javax.swing.JFrame {
     }
     
     private void voorspelActionPerformed(){
-        // voorspellen van ORFs
+        System.out.println("Voorspel action performed");
+        app.voorspel();
+
+// voorspellen van ORFs
     }
     
     private void visualiseerOrfActionPerformed(){
