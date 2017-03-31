@@ -44,29 +44,30 @@ public class Applicatie {
     }
     
     public void voorspel(String sequentie)  throws StringIndexOutOfBoundsException{
-       //String testSequentie = "AGCTGACTGCATCGAGCTGCTATGGCCCTGAGTAACTGACGATGCCTAGGAATGACAGCTATGCCAGACGATGAATGATTGATTGCTAC";
         ArrayList<DNA> ORFs = new ArrayList<DNA>();
-        StringBuilder reverse = new StringBuilder();
+
         String tempORF = "";
         Integer indexORF = 0;
+        Integer startIndex = 0;
 
             try{
                 for(int i = 0;i<3;i++){
                     System.out.println("loop "+i);
-                    for(int e=i; e<sequentie.length()-2;e=e+3){
+                    for(int e=startIndex; e<sequentie.length()-2;e=e+3){
                         if(sequentie.substring(e,e+3).equals("ATG") && tempORF.equals("")){
                             tempORF += sequentie.substring(e, e+3);
                             indexORF +=3;
-                        }else if(sequentie.substring(e, e+3).equals("TAG") || sequentie.substring(e, e+3).equals("TAA")|| sequentie.substring(e, e+3).equals("TGA")){
+                        }else if(tempORF.length()>4 && (sequentie.substring(e, e+3).equals("TAG") || sequentie.substring(e, e+3).equals("TAA")|| sequentie.substring(e, e+3).equals("TGA"))){
                             tempORF +=sequentie.substring(e, e+3);
-                            System.out.println("tempORF: "+tempORF);
                             ORFs.add(new DNA(tempORF,0.0f));
                             tempORF = "";
-                        }else{
-                        tempORF += sequentie.substring(e, e+3);
-
+                        }else if(tempORF != ""){
+                            tempORF += sequentie.substring(e, e+3);
+                        
+                        }else if(e+3>sequentie.length()){
+                            ORFs.add(new DNA(tempORF,0.0f));
                         }
-                    }
+                    } startIndex = startIndex+1;
                 }
             }catch(StringIndexOutOfBoundsException err){
                 System.out.println("error: "+err.getMessage());
@@ -76,21 +77,22 @@ public class Applicatie {
                 }
                 
             }
+    }
             
-       // }
-//        reverse.append(sequentie);
-//        reverse = reverse.reverse();
-//        for(int i=0; i<3; i++){
-//            ORFs.add(new DNA(reverse.substring(i),0.0f));
-//        }
-//        for(int i=0; i<ORFs.size(); i++){
-//            System.out.println(ORFs.get(i).getSequentie());
-//        }
-
 
 // uitvoeren van voorspelling over DNA
-    }
     
+    
+    public String reverseSequentie(String sequentie){
+        StringBuilder reverse = new StringBuilder();
+
+        reverse.append(sequentie);
+        reverse = reverse.reverse();
+        return reverse.toString();
+        }
+
+    
+
     private void BlastORF(ORF item){
         // uitvoeren van BLAST
     }
