@@ -51,23 +51,30 @@ public class Applicatie {
         Integer indexORF = 0;
 
             try{
-                for(int i = 0;i<2;i++){
+                for(int i = 0;i<3;i++){
+                    System.out.println("loop "+i);
                     for(int e=i; e<sequentie.length()-2;e=e+3){
-                        System.out.println("banana");
-                        System.out.println("is "+sequentie.substring(e,e+3)+ " ATG? Answer "+(sequentie.substring(e,e+3) == "ATG"));
-                        if(sequentie.substring(e,e+3)== "ATG"){
-                            
-                            System.out.println("atuff"+sequentie.substring(e,e+3));
+                        if(sequentie.substring(e,e+3).equals("ATG") && tempORF.equals("")){
                             tempORF += sequentie.substring(e, e+3);
-                            indexORF = e+3;
+                            indexORF +=3;
+                        }else if(sequentie.substring(e, e+3).equals("TAG") || sequentie.substring(e, e+3).equals("TAA")|| sequentie.substring(e, e+3).equals("TGA")){
+                            tempORF +=sequentie.substring(e, e+3);
+                            System.out.println("tempORF: "+tempORF);
+                            ORFs.add(new DNA(tempORF,0.0f));
+                            tempORF = "";
+                        }else{
+                        tempORF += sequentie.substring(e, e+3);
+
                         }
-                    System.out.println("codon: "+sequentie.substring(e,e+3)+" tempORF: "+tempORF);
-                    //ORFs.add(new DNA(sequentie.substring(i),0.0f));
                     }
                 }
             }catch(StringIndexOutOfBoundsException err){
                 System.out.println("error: "+err.getMessage());
+                
+            }finally{for(int Y = 0;Y<ORFs.size()-1;Y++){
+                System.out.println("ORF's: "+ORFs.get(Y).getSequentie());
                 }
+                
             }
             
        // }
