@@ -182,7 +182,7 @@ public class GUI extends javax.swing.JFrame {
     }//GEN-LAST:event_bladerButtonActionPerformed
 
     private void voorspelORFButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_voorspelORFButtonActionPerformed
-    app.voorspel();
+    app.voorspel(app.sequence);
 
 // TODO add your handling code here:
     }//GEN-LAST:event_voorspelORFButtonActionPerformed
@@ -221,7 +221,7 @@ public class GUI extends javax.swing.JFrame {
     
     private void voorspelActionPerformed(){
         System.out.println("Voorspel action performed");
-        app.voorspel();
+        app.voorspel(app.sequence);
 
 // voorspellen van ORFs
     }

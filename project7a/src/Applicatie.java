@@ -18,7 +18,7 @@ public class Applicatie {
     public static BufferedReader inFile;
     public JFileChooser fileChooser = new JFileChooser();
     public File selectedFile;
-    public String sequence;
+    public String sequence = "";
     
     
     public static void main(String[] args) {
@@ -37,27 +37,48 @@ public class Applicatie {
             inFile.readLine();
             while ((lines = inFile.readLine()) != null) {
                 sequence += lines;
-    }
+    }       System.out.println("lees bestand: "+sequence);
             } catch (FileNotFoundException e) {
             System.out.println("er is iets fout gegaan bij het inladen van het bestand");
         }
     }
     
-    public void voorspel(){
-       // Float emptyPcn = 0.0;
-       String testSequentie = "AGCTGACTGCATCGAGCTGCTATGGCCCTGAGTAACTGACGATGCCTAGGAATGACAGCTATGCCAGACGATGAATGATTGATTGCTAC";
+    public void voorspel(String sequentie)  throws StringIndexOutOfBoundsException{
+       //String testSequentie = "AGCTGACTGCATCGAGCTGCTATGGCCCTGAGTAACTGACGATGCCTAGGAATGACAGCTATGCCAGACGATGAATGATTGATTGCTAC";
         ArrayList<DNA> ORFs = new ArrayList<DNA>();
         StringBuilder reverse = new StringBuilder();
-        for(int i = 0; i<3;i++){
-            ORFs.add(new DNA(testSequentie.substring(i+1),0.0f));
-        }
-        reverse.append(testSequentie);
-        reverse = reverse.reverse();
-        for(int i=0; i<3; i++){
-            ORFs.add(new DNA(reverse.substring(i+1),0.0f));
-        }
-        System.out.println(ORFs);
-        
+        String tempORF = "";
+        Integer indexORF = 0;
+
+            try{
+                for(int i = 0;i<2;i++){
+                    for(int e=i; e<sequentie.length()-2;e=e+3){
+                        System.out.println("banana");
+                        System.out.println("is "+sequentie.substring(e,e+3)+ " ATG? Answer "+(sequentie.substring(e,e+3) == "ATG"));
+                        if(sequentie.substring(e,e+3)== "ATG"){
+                            
+                            System.out.println("atuff"+sequentie.substring(e,e+3));
+                            tempORF += sequentie.substring(e, e+3);
+                            indexORF = e+3;
+                        }
+                    System.out.println("codon: "+sequentie.substring(e,e+3)+" tempORF: "+tempORF);
+                    //ORFs.add(new DNA(sequentie.substring(i),0.0f));
+                    }
+                }
+            }catch(StringIndexOutOfBoundsException err){
+                System.out.println("error: "+err.getMessage());
+                }
+            }
+            
+       // }
+//        reverse.append(sequentie);
+//        reverse = reverse.reverse();
+//        for(int i=0; i<3; i++){
+//            ORFs.add(new DNA(reverse.substring(i),0.0f));
+//        }
+//        for(int i=0; i<ORFs.size(); i++){
+//            System.out.println(ORFs.get(i).getSequentie());
+//        }
 
 
 // uitvoeren van voorspelling over DNA
