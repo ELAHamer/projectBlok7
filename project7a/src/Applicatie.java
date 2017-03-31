@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
 import static com.sun.org.apache.xalan.internal.lib.ExsltStrings.split;
 import java.io.*;
@@ -16,9 +11,17 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 /**
- *
- * @author Koen
+ * Functie: De applicatie accepteert een DNA sequentie, uit deze sequentie
+ *          voorspelt de applicatie alle mogelijke ORFs van de opgegeven sequentie.
+ *          De voorspelde ORFs worden gevisualiseert op de GUI.
+ *          De DNA sequentie wordt opgeslagen in de database samen met de voorspelde ORFs.
+ * 
+ * @author Koen Rademaker, Ernst Hamer, Rob van Deelen
+ * @Creation date: 21/03/2017
+ * @version 4.0
+ * @known bugs: none
  */
+
 public class Applicatie {
 
     public static BufferedReader inFile;
@@ -33,7 +36,15 @@ public class Applicatie {
             }
         });
     }
-
+    
+    /**
+     * Functie: leest het opgegeven bestand, haalt de header er uit en slaat de gevonden
+     *          sequentie op in de variable sequence
+     * @param locatie
+     * @throws FileNotFoundException
+     * @throws IOException
+     */
+    
     public void leesBestand(String locatie) throws FileNotFoundException, IOException {
         String lines;
         try {
@@ -46,7 +57,11 @@ public class Applicatie {
             System.out.println("er is iets fout gegaan bij het inladen van het bestand");
         }
     }
-
+    
+    /**
+     *  voorspelt de ORFs op de ingeladen DNA sequentie.
+     *  De ORFs worden meegegeven aan de functie opslaan ORF
+     */
     public void voorspel() {
         // Float emptyPcn = 0.0;
         String testSequentie = "AGCTGACTGCATCGAGCTGCTATGGCCCTGAGTAACTGACGATGCCTAGGAATGACAGCTATGCCAGACGATGAATGATTGATTGCTAC";
@@ -71,11 +86,18 @@ public class Applicatie {
         opslaanORF();
 
     }
-
+    /**
+     * het uitvoeren van blast op de gevonden ORFs
+     * 
+     */
     private void BlastORF(ORF item) {
         // uitvoeren van BLAST
     }
-
+    
+     /**
+     *  het opslaan van de DNA sequentie in de database.
+     * 
+     */
     private void opslaanDNA() {
         try {
             Class.forName("oracle.jdbc.OracleDriver");
@@ -101,7 +123,10 @@ public class Applicatie {
             }
         }
     }
-
+    /**
+     * het opslaan van de ORFs in de database.
+     * 
+     */
     private void opslaanORF() {
         Connection insertORF = null;
         try {
@@ -124,7 +149,6 @@ public class Applicatie {
     }
 
     private void opslaan(BLAST object) {
-        // connectie met database maken
-        // query voor het opslaan van een BLAST met bijhorend ORF en DNA
+       
     }
 }
