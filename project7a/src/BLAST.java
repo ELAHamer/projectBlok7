@@ -1,6 +1,10 @@
-/**
- *
- * @author Rob
+/** 
+ * Functie: Blast object voor opslag van de Blast resultaten
+ * 
+ * @author Koen Rademaker, Ernst Hamer, Rob van Deelen
+ * @Creation date: 21/03/2017
+ * @version 4.0
+ * @known bugs: none
  */
 public class BLAST {
     private Integer bitscore;
