@@ -7,8 +7,11 @@ import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 
 /**
- *
- * @author Ernst
+ * Functie: Grafische weergave van de applicatie en interactie met gebruikersinvoer.
+ * @author Koen Rademaker, Ernst Hamer, Rob van Deelen
+ * @Creation date: 21/03/2017
+ * @version 4.0
+ * @known bugs: None, interactie van sommige onderdelen ontbreekt nog.
  */
 public class GUI extends javax.swing.JFrame {
     JFileChooser fileChooser = new JFileChooser();
@@ -173,6 +176,11 @@ public class GUI extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+    * Functie: Opent een FileChooser en laat de gebruiker een bestand selecteren als invoer.
+    *          Geeft een geselecteerd bestand mee om te openen.
+    */
+    
     private void bladerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bladerButtonActionPerformed
         int reply = fileChooser.showOpenDialog(this);
         if (reply == JFileChooser.APPROVE_OPTION) {
@@ -180,13 +188,18 @@ public class GUI extends javax.swing.JFrame {
         }
         bestandTextField.setText(selectedFile.getAbsolutePath());
     }//GEN-LAST:event_bladerButtonActionPerformed
-
+    
+    /**
+    * Roept de functie voorspel() aan om ORFs te voorspellen.
+    */
     private void voorspelORFButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_voorspelORFButtonActionPerformed
     app.voorspel();
 
 // TODO add your handling code here:
     }//GEN-LAST:event_voorspelORFButtonActionPerformed
-
+    /**
+    * Opent het geselecteerde bestand en roept de methode leesBestand() aan om de inhoud te lezen.
+    */
     private void openButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openButtonActionPerformed
         String fileLocation = bestandTextField.getText();
             try {
@@ -199,8 +212,6 @@ public class GUI extends javax.swing.JFrame {
     }//GEN-LAST:event_openButtonActionPerformed
 
     private void visualiseerORF(ORF item, DNA sequentie){
-        
-
     //visualiseren van ORFs
     }
     
@@ -219,11 +230,13 @@ public class GUI extends javax.swing.JFrame {
         // zoeken over DNA sequentie
     }
     
+    /**
+    * Roept de methode voorspel() aan om ORFs te voorspellen.
+    */
     private void voorspelActionPerformed(){
         System.out.println("Voorspel action performed");
         app.voorspel();
-
-// voorspellen van ORFs
+        // voorspellen van ORFs
     }
     
     private void visualiseerOrfActionPerformed(){
