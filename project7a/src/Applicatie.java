@@ -27,7 +27,8 @@ public class Applicatie {
     public static BufferedReader inFile;
     public JFileChooser fileChooser = new JFileChooser();
     public File selectedFile;
-    public String sequence;
+    public String sequence = "";
+    public ArrayList<ORF> ORFsList = new ArrayList<ORF>();
 
     public static void main(String[] args) {
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -62,9 +63,9 @@ public class Applicatie {
      *  voorspelt de ORFs op de ingeladen DNA sequentie.
      *  De ORFs worden meegegeven aan de functie opslaan ORF
      */
-    public ArrayList<ORF> voorspel(String sequentie, String direction)  throws StringIndexOutOfBoundsException{
+    public void voorspel(String sequentie, String direction)  throws StringIndexOutOfBoundsException{
 
-        ArrayList<ORF> ORFs = new ArrayList<ORF>();
+        //ArrayList<ORF> ORFsList = new ArrayList<ORF>();
 
         String tempORF = "";
         Integer indexORF = 0;
@@ -72,48 +73,58 @@ public class Applicatie {
         Integer frame = 0;
 
         
-       // System.out.println("input: "+sequentie+" index: "+startIndex);        
+        System.out.println("input: "+sequentie+" index: "+startIndex); 
+        
             try{
                 for(int i = 0;i<3;i++){
-                    //System.out.println("loop "+i);
-                    for(int e=startIndex; e<sequentie.length()-2;e=e+3){
-                        //System.out.println("codon: "+sequentie.substring(e, e+3));
+                    System.out.println(startIndex);
+                    for(int e=startIndex; e<sequentie.length()-3;e=e+3){
+                        
                         if(sequentie.substring(e,e+3).equals("ATG") && tempORF.equals("")){
+                            //Add the starting codon to the ORF
                             tempORF += sequentie.substring(e, e+3);
-                            //System.out.println(sequentie.substring(e,e+3));
                             indexORF +=3;
-                        }else if(tempORF.length()>4 && (sequentie.substring(e, e+3).equals("TAG") || sequentie.substring(e, e+3).equals("TAA")|| sequentie.substring(e, e+3).equals("TGA"))){
-                            tempORF +=sequentie.substring(e, e+3);
-                            //System.out.println(tempORF);
-                            ORFs.add(new ORF(tempORF,0.0f,indexORF,frame));
+                            
+                        }else if(tempORF.length()>3 && (sequentie.substring(e, e+3).equals("TAG") || sequentie.substring(e, e+3).equals("TAA")|| sequentie.substring(e, e+3).equals("TGA"))){
+                            //If the ORF has at least one codon, look for a stop codon
+                            tempORF += sequentie.substring(e, e+3);                          
+                            ORFsList.add(new ORF(tempORF,0.0f,indexORF,frame));                       
                             tempORF = "";
                             indexORF = 0;
+                            
                         }else if(tempORF != ""){
+                            //If the codon is neither a start or a stop append it to the ORF
                             tempORF += sequentie.substring(e, e+3);
                             indexORF += 3;
+                            
                         }else if(e+3>sequentie.length()){
-                            ORFs.add(new ORF(tempORF,0.0f,indexORF,frame));
+                            //If the remaining nucleotides are fewer then 3, append the ORF to the list of ORFs
+                            ORFsList.add(new ORF(tempORF,0.0f,indexORF,frame));
                         }
                     }   startIndex = startIndex+1;
                         if(direction.equals("forward")){
                             frame = frame +1;
                         }else{
+                            System.out.println("reverse");
                             frame = frame -1;
                         }
                 }
             }catch(StringIndexOutOfBoundsException err){
                 System.out.println("error: "+err.getMessage());
                 
-            }finally{for(int Y = 0;Y<ORFs.size();Y++){              
-                if(ORFs.get(Y).getFrame()<-1){
-                    ORFs.get(Y).setSequentie(reverseSequentie(ORFs.get(Y).getSequentie()));
+            }finally{for(int Y = 0;Y<ORFsList.size();Y++){              
+                if(ORFsList.get(Y).getFrame()<-1){
+                    ORFsList.get(Y).setSequentie(reverseSequentie(ORFsList.get(Y).getSequentie()));
+                }else{
                 }                
             }
                 
-            }return ORFs;
+            }
+       
         // ORFs voorspellen en opslaan in ORFsList
         opslaanDNA();
         opslaanORF();
+        //return ORFsList;
 
     }
     /**
@@ -141,6 +152,7 @@ public class Applicatie {
      * 
      */
     private void opslaanDNA() {
+        //System.out.println("opslana DNA: "+ORFsList);
         try {
             Class.forName("oracle.jdbc.OracleDriver");
         } catch (ClassNotFoundException e) {
@@ -154,8 +166,10 @@ public class Applicatie {
             Statement statement = insertDNA.createStatement();
             statement.executeUpdate("INSERT INTO sequentie VALUES('" + sequence + "',0.0,(SELECT MAX(DNA_SEQUENTIE_ID) FROM DNA_SEQUENTIE)+1)");
         } catch (SQLException ex) {
+            System.out.println( ex.getMessage());
             ex.printStackTrace();
-        } finally {
+        } 
+        finally {
             try {
                 if (insertDNA != null && !insertDNA.isClosed()) {
                     insertDNA.close();
@@ -178,7 +192,9 @@ public class Applicatie {
                 statement.executeUpdate("INSERT INTO ORF VALUES('" + ORFsList.get(i).getSequence() + "', 0.0, (SELECT MAX(ORF_ID) FROM ORF)+1, (SELECT MAX(DNA_SEQUENTIE_ID) FROM DNA_SEQUENTIE))");
             }
         } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
             ex.printStackTrace();
+            
         } finally {
             try {
                 if (insertORF != null && !insertORF.isClosed()) {

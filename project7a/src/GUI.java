@@ -196,16 +196,13 @@ public class GUI extends javax.swing.JFrame {
         
         app.voorspel(app.sequence,"forward");
         app.voorspel(app.reverseSequentie(app.sequence),"reverse");
-        for(int i=0;i<app.voorspel(app.sequence, "forward").size();i++){
-            orfVisualisatie.append("\nORF "+(app.voorspel(app.sequence, "forward")).get(i).getSequentie());
+        for(int i =0;i<app.ORFsList.size();i++){
+            System.out.println("ORF list: "+app.ORFsList.get(i).getFrame());
         }
-        for(int i=0;i<app.voorspel(app.reverseSequentie(app.sequence), "reverse").size();i++){
-            orfVisualisatie.append("\nORF "+(app.voorspel(app.reverseSequentie(app.sequence),"reverse")).get(i).getSequentie());
-        }
-        
+
 
 // TODO add your handling code here:
-    } //GEN-LAST:event_voorspelORFButtonActionPerformed
+    }                                                  
     /**
     * Opent het geselecteerde bestand en roept de methode leesBestand() aan om de inhoud te lezen.
     */
@@ -244,7 +241,7 @@ public class GUI extends javax.swing.JFrame {
     */
     private void voorspelActionPerformed(){
         System.out.println("Voorspel action performed");
-        app.voorspel();
+        //app.voorspel(app.sequence,"forward");
         // voorspellen van ORFs
     }
     

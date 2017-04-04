@@ -46,7 +46,7 @@ public class ORF extends DNA {
      *
      * @return sequentie
      */
-    public String getSequentie(){
+    public String getSequence(){
         return this.sequentie;
     }
 
@@ -54,7 +54,7 @@ public class ORF extends DNA {
      * schrijft sequentie over
      * @param seq
      */
-    public void setSequentie(String seq){
+    public void setSequence(String seq){
         this.sequentie = seq;      
     }
 
@@ -65,4 +65,13 @@ public class ORF extends DNA {
     public void setPercentageN(Float pcN){
         this.PercentageN = pcN;
     }
+    
+    public void setFrame(Integer frm){
+        this.frame = frm;
+    }
+
+    public Integer getFrame(){
+        return this.frame;
+    }
+
 }
