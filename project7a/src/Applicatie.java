@@ -164,7 +164,7 @@ public class Applicatie {
         try {
             insertDNA = DriverManager.getConnection("jdbc:oracle:thin:@//cytosine.nl:1521/xe", "owe7_pg3", "blaat1234");
             Statement statement = insertDNA.createStatement();
-            statement.executeUpdate("INSERT INTO sequentie VALUES('" + sequence + "',0.0,(SELECT MAX(DNA_SEQUENTIE_ID) FROM DNA_SEQUENTIE)+1)");
+            statement.executeUpdate("INSERT INTO dna_sequentie VALUES('" + sequence + "',0.0,(SELECT MAX(DNA_SEQUENTIE_ID) FROM DNA_SEQUENTIE)+1)");
         } catch (SQLException ex) {
             System.out.println( ex.getMessage());
             ex.printStackTrace();
